@@ -47,6 +47,11 @@ public class Topic_04_Selenium_Xpath {
         driver.findElement(By.xpath("//a[@href='/sitemap']"));
 
     }
+    @Test
+    public void TC_05_img() {
+        driver.findElement(By.xpath("//img[@src='https://demo.nopcommerce.com/images/thumbs/0000008_accessories_450.jpg']"));
+
+    }
     @AfterClass
     public void afterClass() {
 
