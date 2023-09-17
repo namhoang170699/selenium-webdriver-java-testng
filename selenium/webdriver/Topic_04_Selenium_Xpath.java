@@ -1,5 +1,6 @@
 package webdriver;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
@@ -27,11 +28,23 @@ public class Topic_04_Selenium_Xpath {
     }
 
     @Test
-    public void TC_01_() {
-
+    public void TC_01_class() {
+        driver.findElement(By.xpath("//button[@class='button-1 search-box-button']"));
     }
-
-    public void TC_02_() {
+    @Test
+    public void TC_02_id() {
+        driver.findElement(By.xpath("//select[@id='customerCurrency']"));
+    }
+    @Test
+    public void TC_03_name() {
+        driver.findElement(By.xpath("//input[@name='NewsletterEmail']"));
+    }
+    @Test
+    public void TC_04_linktext() {
+        driver.findElement(By.xpath("//a[contains(@href,'/sitemap')]"));
+        driver.findElement(By.xpath("//a[contains(text(),'Sitemap')]"));
+        driver.findElement(By.xpath("//a[text()='Sitemap']"));
+        driver.findElement(By.xpath("//a[@href='/sitemap']"));
 
     }
     @AfterClass
