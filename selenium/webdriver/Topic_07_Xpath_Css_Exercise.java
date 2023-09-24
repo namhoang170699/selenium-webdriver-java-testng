@@ -56,7 +56,7 @@ public class Topic_07_Xpath_Css_Exercise {
         String phoneErrorMsg = driver.findElement(By.id("txtPhone-error")).getText();
         Assert.assertEquals(phoneErrorMsg,"Vui lòng nhập số điện thoại.");
     }
-
+    @Test
     public void TC_02_() {
         driver.get("https://alada.vn/tai-khoan/dang-ky.html");
         driver.findElement(By.id("txtFirstname")).sendKeys("Joe Biden");
@@ -68,8 +68,41 @@ public class Topic_07_Xpath_Css_Exercise {
         driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
 
         String emailErrorMsg = driver.findElement(By.id("txtEmail-error")).getText();
-        Assert.assertEquals(emailErrorMsg,"Vui lòng nhập email");
+        Assert.assertEquals(emailErrorMsg,"Vui lòng nhập email hợp lệ");
+        String cEmailErrorMsg = driver.findElement(By.id("txtCEmail-error")).getText();
+        Assert.assertEquals(cEmailErrorMsg,"Email nhập lại không đúng");
 
+    }
+    @Test
+    public void TC_03_() {
+        driver.get("https://alada.vn/tai-khoan/dang-ky.html");
+        driver.findElement(By.id("txtFirstname")).sendKeys("Joe Biden");
+        driver.findElement(By.id("txtEmail")).sendKeys("a@a.com");
+        driver.findElement(By.id("txtCEmail")).sendKeys("a@@a.com");
+        driver.findElement(By.id("txtPassword")).sendKeys("123456a@");
+        driver.findElement(By.id("txtCPassword")).sendKeys("123456a@");
+        driver.findElement(By.id("txtPhone")).sendKeys("0394567890");
+        driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
+
+        String cEmailErrorMsg = driver.findElement(By.id("txtCEmail-error")).getText();
+        Assert.assertEquals(cEmailErrorMsg,"Email nhập lại không đúng");
+    }
+    @Test
+    public void TC_04_() {
+        driver.get("https://alada.vn/tai-khoan/dang-ky.html");
+        driver.findElement(By.id("txtFirstname")).sendKeys("Joe Biden");
+        driver.findElement(By.id("txtEmail")).sendKeys("a@a.com");
+        driver.findElement(By.id("txtCEmail")).sendKeys("a@a.com");
+        driver.findElement(By.id("txtPassword")).sendKeys("12345");
+        driver.findElement(By.id("txtCPassword")).sendKeys("12345");
+        driver.findElement(By.id("txtPhone")).sendKeys("0394567890");
+        driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
+
+        String passwordErrorMsg = driver.findElement(By.id("txtPassword-error")).getText();
+        Assert.assertEquals(passwordErrorMsg,"Mật khẩu phải có ít nhất 6 ký tự");
+
+        String cPasswordErrorMsg = driver.findElement(By.id("txtCPassword-error")).getText();
+        Assert.assertEquals(cPasswordErrorMsg,"Mật khẩu phải có ít nhất 6 ký tự");
 
     }
     @AfterClass
