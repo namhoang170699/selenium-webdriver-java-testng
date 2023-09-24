@@ -29,7 +29,7 @@ public class Topic_07_Xpath_Css_Exercise {
     }
 
     @Test
-    public void TC_01_() {
+    public void TC_01_Empty_Data() {
         driver.get("https://alada.vn/tai-khoan/dang-ky.html");
         driver.findElement(By.id("txtFirstname")).clear();
         driver.findElement(By.id("txtEmail")).clear();
@@ -57,7 +57,7 @@ public class Topic_07_Xpath_Css_Exercise {
         Assert.assertEquals(phoneErrorMsg,"Vui lòng nhập số điện thoại.");
     }
     @Test
-    public void TC_02_() {
+    public void TC_02_Invalid_Email() {
         driver.get("https://alada.vn/tai-khoan/dang-ky.html");
         driver.findElement(By.id("txtFirstname")).sendKeys("Joe Biden");
         driver.findElement(By.id("txtEmail")).sendKeys("a@@a.com");
@@ -74,7 +74,7 @@ public class Topic_07_Xpath_Css_Exercise {
 
     }
     @Test
-    public void TC_03_() {
+    public void TC_03_Invalid_CEmail() {
         driver.get("https://alada.vn/tai-khoan/dang-ky.html");
         driver.findElement(By.id("txtFirstname")).sendKeys("Joe Biden");
         driver.findElement(By.id("txtEmail")).sendKeys("a@a.com");
@@ -88,7 +88,7 @@ public class Topic_07_Xpath_Css_Exercise {
         Assert.assertEquals(cEmailErrorMsg,"Email nhập lại không đúng");
     }
     @Test
-    public void TC_04_() {
+    public void TC_04_Invalid_Password() {
         driver.get("https://alada.vn/tai-khoan/dang-ky.html");
         driver.findElement(By.id("txtFirstname")).sendKeys("Joe Biden");
         driver.findElement(By.id("txtEmail")).sendKeys("a@a.com");
@@ -104,6 +104,42 @@ public class Topic_07_Xpath_Css_Exercise {
         String cPasswordErrorMsg = driver.findElement(By.id("txtCPassword-error")).getText();
         Assert.assertEquals(cPasswordErrorMsg,"Mật khẩu phải có ít nhất 6 ký tự");
 
+    }
+    @Test
+    public void TC_05_Invalid_CPassword() {
+        driver.get("https://alada.vn/tai-khoan/dang-ky.html");
+        driver.findElement(By.id("txtFirstname")).sendKeys("Joe Biden");
+        driver.findElement(By.id("txtEmail")).sendKeys("a@a.com");
+        driver.findElement(By.id("txtCEmail")).sendKeys("a@a.com");
+        driver.findElement(By.id("txtPassword")).sendKeys("123456");
+        driver.findElement(By.id("txtCPassword")).sendKeys("123457");
+        driver.findElement(By.id("txtPhone")).sendKeys("0394567890");
+        driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
+
+        String cPasswordErrorMsg = driver.findElement(By.id("txtCPassword-error")).getText();
+        Assert.assertEquals(cPasswordErrorMsg,"Mật khẩu bạn nhập không khớp");
+
+    }
+    @Test
+    public void TC_06_Invalid_Phone() {
+        driver.get("https://alada.vn/tai-khoan/dang-ky.html");
+        driver.findElement(By.id("txtFirstname")).sendKeys("Joe Biden");
+        driver.findElement(By.id("txtEmail")).sendKeys("a@a.com");
+        driver.findElement(By.id("txtCEmail")).sendKeys("a@a.com");
+        driver.findElement(By.id("txtPassword")).sendKeys("123456");
+        driver.findElement(By.id("txtCPassword")).sendKeys("123456");
+        driver.findElement(By.id("txtPhone")).sendKeys("039456789");
+        driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
+
+        Assert.assertEquals(driver.findElement(By.id("txtPhone-error")).getText(),"Số điện thoại phải từ 10-11 số.");
+
+        driver.findElement(By.id("txtPhone")).clear();
+        driver.findElement(By.id("txtPhone")).sendKeys("039123456789");
+        Assert.assertEquals(driver.findElement(By.id("txtPhone-error")).getText(),"Số điện thoại phải từ 10-11 số.");
+
+        driver.findElement(By.id("txtPhone")).clear();
+        driver.findElement(By.id("txtPhone")).sendKeys("1234567890");
+        Assert.assertEquals(driver.findElement(By.id("txtPhone-error")).getText(),"Số điện thoại bắt đầu bằng: 09 - 03 - 012 - 016 - 018 - 019 - 088 - 03 - 05 - 07 - 08");
     }
     @AfterClass
     public void afterClass() {
