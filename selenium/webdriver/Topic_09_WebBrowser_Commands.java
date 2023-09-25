@@ -1,10 +1,12 @@
 package webdriver;
 
+import graphql.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.logging.LogType;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -75,9 +77,39 @@ public class Topic_09_WebBrowser_Commands {
 
         // Nó sẽ đi tìm vs loại By nào và trả về 1 danh sách element nếu như được tìm thấy [List element]
         // Ko đc tìm thấy: ko bị Fail  - trả về 1 list rỗng
-
         List<WebElement> checkboxes = driver.findElements(By.xpath("//input[@type='checkbox']"));
         checkboxes.get(1).click();
+
+        // Lấy raurl của màn hình/page hiện tại đang đứng
+        System.out.println(driver.getCurrentUrl());
+
+        // Lấy ra page source HTML/ CSS /JS của page hiện tại
+        // Verify 1 cách tương đối
+        driver.getPageSource();
+        driver.getCurrentUrl().contains("");
+        Assert.assertTrue(driver.getCurrentUrl().contains(""));
+
+        // Lấy ra title của page hiện tại
+        driver.getTitle();
+
+        // Lấy ra ID của cửa số/ tab hiện tại
+        driver.getWindowHandle();
+
+        // Cookies -framework
+        driver.manage().getCookies();
+
+        //Get ra những log ở dev tool
+        driver.manage().logs().get(LogType.DRIVER);
+
+        // Apply cho việc tìm element (findElement/ findElements)
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+
+
+        // Set trước khi dùng vs thư viện JavascripExecutor
+        // Inject 1 đoạn code JS vào trong Browser/Element
+        driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(30));
     }
 
     public void TC_02_() {
