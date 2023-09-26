@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.openqa.selenium.WebElement;
 
+import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -110,6 +111,23 @@ public class Topic_09_WebBrowser_Commands {
         // Set trước khi dùng vs thư viện JavascripExecutor
         // Inject 1 đoạn code JS vào trong Browser/Element
         driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(30));
+
+        // Điều hướng trang web
+        driver.navigate().back();
+        driver.navigate().refresh();
+        driver.navigate().forward();
+
+        // Thao tác vs history của web page (back/ forward)
+        driver.navigate().to("");
+        driver.navigate().to(new URL(""));
+
+        // Alert/ Window (tab)/ Frame (iframe)
+        driver.switchTo().alert().accept();
+        driver.switchTo().alert().dismiss();
+        driver.switchTo().alert().getText();
+        driver.switchTo().alert().sendKeys("");
+
+
     }
 
     public void TC_02_() {
