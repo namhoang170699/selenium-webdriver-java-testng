@@ -119,7 +119,7 @@ public class Topic_09_WebBrowser_Commands {
 
         // Thao tác vs history của web page (back/ forward)
         driver.navigate().to("");
-        driver.navigate().to(new URL(""));
+//        driver.navigate().to(new URL(""));
 
         // Alert/ Window (tab)/ Frame (iframe)
         driver.switchTo().alert().accept();
