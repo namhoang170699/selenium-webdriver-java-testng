@@ -115,7 +115,7 @@ public class Topic_14_WebElement_Exercise2_1 {
         driver.findElement(By.cssSelector(".footer a[title='My Account']")).click();
         sleepInSeconds(3);
         //Step 03: Click Create an Account button
-        driver.findElement(By.cssSelector("a[title='Create an Account'")).click();
+        driver.findElement(By.cssSelector("a[title='Create an Account']")).click();
         sleepInSeconds(3);
         //Step 04: Input firstName
         driver.findElement(By.cssSelector("input#firstname")).sendKeys(firstName);
