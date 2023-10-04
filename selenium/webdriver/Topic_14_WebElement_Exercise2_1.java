@@ -142,15 +142,16 @@ public class Topic_14_WebElement_Exercise2_1 {
         //Step 12: Log out
         driver.findElement(By.cssSelector("a.skip-account")).click();
         driver.findElement(By.cssSelector("a[title='Log Out']")).click();
-        sleepInSeconds(5);
+        sleepInSeconds(7);
         //Step 13: Log in
         driver.findElement(By.cssSelector("a.skip-link.skip-account span")).click();
+        sleepInSeconds(5);
         driver.findElement(By.cssSelector("a[title='Log In']")).click();
         sleepInSeconds(3);
         driver.findElement(By.cssSelector("input#email")).sendKeys(email);
         driver.findElement(By.cssSelector("input#pass")).sendKeys(password);
         driver.findElement(By.xpath("//span[text()='Login']")).click();
-
+        sleepInSeconds(3);
         Assert.assertEquals(driver.findElement(By.cssSelector("div.welcome-msg strong")).getText(),"Hello, " + fullName + "!");
 
         contactInfo = driver.findElement(By.xpath("//h3[text()='Contact Information']/parent::div//following-sibling::div/p")).getText();
