@@ -43,7 +43,6 @@ public class Topic_12_WebBrowser_Commands_Exercise {
 
         Assert.assertEquals(driver.getCurrentUrl(), "http://live.techpanda.org/index.php/customer/account/create/");
 
-
     }
 
     @Test
