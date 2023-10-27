@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -54,17 +55,21 @@ public class Topic_17_Button_Radio_Checkbox {
     @Test
     public void TC_02_Telerik_checkbox_radio() {
         driver.get("https://demos.telerik.com/kendo-ui/checkbox/index");
-        elementClick(By.cssSelector("input#eq5"));
-        isElementSelected(By.cssSelector("input#eq5"));
+        By dualZoneCheckbox = By.xpath("//label[text()='Dual-zone air conditioning']/preceding-sibling::input");
+        if (!isElementSelected(dualZoneCheckbox)){
+            elementClick(dualZoneCheckbox);
+        }
+        Assert.assertTrue(isElementSelected(dualZoneCheckbox));
 
         driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
-        elementClick(By.cssSelector("input#engine3"));
-        isElementSelected(By.cssSelector("input#engine3"));
+        By twoPetrolRadio = By.xpath("//label[text()='2.0 Petrol, 147kW']/preceding-sibling::input");
+        elementClick(twoPetrolRadio);
+        Assert.assertTrue(isElementSelected(twoPetrolRadio));
     }
     @Test
     public void TC_03_Angular_checkbox_radio() {
         driver.get("https://material.angular.io/components/radio/examples");
-        elementClick(By.cssSelector("input#mat-radio-4-input"));
+        elementClick(By.cssSelector("//label[text()='2.0 Petrol, 147kW']/preceding-sibling::input"));
         Assert.assertTrue(isElementSelected(By.cssSelector("input#mat-radio-4-input")));
 
         driver.get("https://material.angular.io/components/checkbox/examples");
@@ -87,6 +92,33 @@ public class Topic_17_Button_Radio_Checkbox {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();",radioButton);
         sleepInSeconds(5);
     }
+    @Test
+    public void TC_05_Select_multiple_fields() {
+        driver.get("https://automationfc.github.io/multiple-fields/");
+        List<WebElement> allCheckboxes = driver.findElements(By.cssSelector("div.form-input-wide input.form-checkbox"));
+        for (WebElement eachCheckbox: allCheckboxes) {
+            if (!isElementSelectedWebElement(eachCheckbox)){
+                eachCheckbox.click();
+            }
+        }
+
+        for (WebElement eachCheckboxIsSelected: allCheckboxes) {
+            Assert.assertTrue(eachCheckboxIsSelected.isSelected());
+            System.out.println(eachCheckboxIsSelected);
+        }
+
+        driver.navigate().refresh();
+        driver.manage().deleteAllCookies();
+        sleepInSeconds(3);
+        allCheckboxes = driver.findElements(By.cssSelector("div.form-input-wide input.form-checkbox"));
+        for (WebElement eachCheckbox: allCheckboxes) {
+            if (!isElementSelectedWebElement(eachCheckbox) && eachCheckbox.getAttribute("value").equals("Heart Attack") ){
+                eachCheckbox.click();
+                sleepInSeconds(3);
+            }
+        }
+    }
+
         @AfterClass
     public void afterClass() {
 
@@ -107,6 +139,16 @@ public class Topic_17_Button_Radio_Checkbox {
             return true;
         }else {
             System.out.println("Element is not selected:" + by);
+            return false;
+        }
+    }
+    public boolean isElementSelectedWebElement(WebElement webElement) {
+        WebElement element = webElement;
+        if (element.isSelected()) {
+            System.out.println("Element is selected:" + webElement);
+            return true;
+        }else {
+            System.out.println("Element is not selected:" + webElement);
             return false;
         }
     }
