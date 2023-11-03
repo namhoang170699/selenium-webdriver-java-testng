@@ -118,6 +118,16 @@ public class Topic_17_Button_Radio_Checkbox {
             }
         }
     }
+    @Test
+    public void TC_06_Custom_checkbox_radio() {
+        driver.get("https://docs.google.com/forms/d/e/1FAIpQLSfiypnd69zhuDkjKgqvpID9kwO29UCzeCVrGGtbNPZXQok0jA/viewform");
+        sleepInSeconds(5);
+        By canThoRadio = By.xpath("//div[@aria-label='Cần Thơ']");
+        Assert.assertEquals(driver.findElement(canThoRadio).getAttribute("aria-checked"),"false");
+        driver.findElement(By.xpath("//div[@aria-label='Cần Thơ']")).click();
+        Assert.assertEquals(driver.findElement(canThoRadio).getAttribute("aria-checked"),"true");
+
+    }
 
         @AfterClass
     public void afterClass() {
