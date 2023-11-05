@@ -1,8 +1,15 @@
 package webdriver;
 
+import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.HasDevTools;
+import org.openqa.selenium.devtools.v116.network.Network;
+import org.openqa.selenium.devtools.v116.network.model.Headers;
+import org.openqa.selenium.devtools.v85.domsnapshot.model.ArrayOfStrings;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,7 +19,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class Topic_18_Alert {
@@ -23,6 +35,8 @@ public class Topic_18_Alert {
 
     By result = By.cssSelector("p#result");
     String projectlocation = System.getProperty("user.dir");
+    String username = "admin";
+    String password = "admin";
     @BeforeClass
     public void beforeClass() {
         if (osName.contains("Windows")) {
@@ -79,6 +93,38 @@ public class Topic_18_Alert {
         sleepInSeconds(5);
         Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]")).isDisplayed());
 
+    }
+    @Test
+    public void TC_04_Authentication_alert_devtool() {
+        // Get DevTool object
+        DevTools devTools = ((HasDevTools) driver).getDevTools();
+
+        // Start new session
+        devTools.createSession();
+
+        // Enable the Network domain of devtools
+        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+
+        // Encode username/ password
+        Map<String, Object> headers = new HashMap<String, Object>();
+        String basicAuthen = "Basic " + new String(new Base64().encode(String.format("%s:%s", "admin", "admin").getBytes()));
+        headers.put("Authorization", basicAuthen);
+
+        // Set to Header
+        devTools.send(Network.setExtraHTTPHeaders(new Headers(headers)));
+
+        driver.get("https://the-internet.herokuapp.com/basic_auth");
+
+    }
+    @Test
+    public void TC_04_Authentication_alert_navigate() {
+        driver.get("https://the-internet.herokuapp.com");
+        String basicAuthURL = driver.findElement(By.xpath("//a[text()='Basic Auth']")).getAttribute("href");
+        String[] arrayBasicAuthURL = basicAuthURL.split("//");
+        driver.get(arrayBasicAuthURL[0] + "//" + username + ":" + password + "@" + arrayBasicAuthURL[1]);
+        Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]")).isDisplayed());
+
+        sleepInSeconds(3);
     }
         @AfterClass
     public void afterClass() {
