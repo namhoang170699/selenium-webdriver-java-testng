@@ -1,11 +1,8 @@
 package webdriver;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.Color;
-import org.testng.Assert;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -16,6 +13,7 @@ public class Topic_00_Template {
     WebDriver driver;
     String projectPath = System.getProperty("user.dir");
     String osName = System.getProperty("os.name");
+    Actions actions;
 
     @BeforeClass
     public void beforeClass() {
@@ -26,6 +24,7 @@ public class Topic_00_Template {
         }
 
         driver = new FirefoxDriver();
+        actions = new Actions(driver);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
