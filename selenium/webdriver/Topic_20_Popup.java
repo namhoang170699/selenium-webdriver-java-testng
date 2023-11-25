@@ -2,6 +2,7 @@ package webdriver;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -9,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Topic_20_Popup {
@@ -87,6 +89,21 @@ public class Topic_20_Popup {
         sleepInSeconds(3);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         Assert.assertEquals(driver.findElements(By.xpath("//div[text()='Sign Up']/ancestor::div[@class='_8ien']")).size(),0);
+    }
+    @Test
+    public  void TC_05_Random_Popup_Not_InDom() {
+        driver.get("https://www.javacodegeeks.com/");
+        List<WebElement> popUp = driver.findElements(By.cssSelector("div#lepopup-popup-122>div:not([style^='display:none'])"));
+        if (popUp.size() > 0 && popUp.get(0).isDisplayed()) {
+            System.out.println("Pop up hiển thị");
+            driver.findElement(By.cssSelector("div.lepopup-element-23 a[onclick*='lepopup_close']")).click();
+
+        } else {
+            System.out.println("Pop up không hiển thị");
+        }
+        driver.findElement(By.cssSelector("input#search-input")).sendKeys("Agile Testing Explained");
+        driver.findElement(By.cssSelector("button#search-submit")).click();
+        Assert.assertEquals(driver.findElement(By.cssSelector("li.post-114701 h2>a")).getText(),"Agile Testing Explained");
     }
     @AfterClass
     public void afterClass() {
