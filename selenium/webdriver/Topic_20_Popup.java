@@ -105,7 +105,32 @@ public class Topic_20_Popup {
         driver.findElement(By.cssSelector("button#search-submit")).click();
         Assert.assertEquals(driver.findElement(By.cssSelector("li.post-114701 h2>a")).getText(),"Agile Testing Explained");
     }
-    @AfterClass
+    @Test
+    public  void TC_06_Random_Popup_InDom() {
+        driver.get("https://vnk.edu.vn/");
+        By marketingPopUp = By.cssSelector("div.tve-leads-conversion-object");
+        if (driver.findElement(marketingPopUp).isDisplayed()) {
+            System.out.println("Pop up hiển thị");
+            driver.findElement(By.cssSelector("div.tve_ea_thrive_leads_form_close")).click();
+        } else {
+            System.out.println("Pop up không hiển thị");
+        }
+    }
+    @Test
+    public  void TC_07_Random_Popup_InDom() {
+        driver.get("https://dehieu.vn/");
+        sleepInSeconds(10);
+        By popUp = By.cssSelector("div.popup-content");
+        if (driver.findElements(popUp).size() > 0 && driver.findElements(popUp).get(0).isDisplayed()){
+            System.out.println("Pop up hiển thị");
+            driver.findElement(By.cssSelector("button#close-popup")).click();
+        } else {
+            System.out.println("Pop up ko hiển thị");
+        }
+    }
+
+
+        @AfterClass
     public void afterClass() {
 
         driver.quit();
