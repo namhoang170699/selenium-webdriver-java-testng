@@ -81,14 +81,16 @@ public class Topic_26_Wait {
     }
     @Test
     public void TC_05_Explicit_Wait_telerik() {
-        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.get("https://demos.telerik.com/aspnet-ajax/ajaxloadingpanel/functionality/explicit-show-hide/defaultcs.aspx");
         explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.demo-container")));
         System.out.println(driver.findElement(By.cssSelector("div.datesContainer span")).getText());
         driver.findElement(By.cssSelector("td[title='Monday, January 08, 2024']>a")).click();
 //        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='datesContainer']//span[text()='Monday, January 8, 2024']")));
         explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.raDiv")));
-        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("td[title='Monday, January 08, 2024'][class='rcSelected']")));
+        actions.moveToElement(driver.findElement(By.cssSelector("button[value='Clear Selected Dates']"))).perform();
+        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("td[title='Monday, January 08, 2024'][class='rcSelected']>a")));
         Assert.assertEquals(driver.findElement(By.cssSelector("div.datesContainer span")).getText(),"Monday, January 8, 2024");
     }
     @Test
